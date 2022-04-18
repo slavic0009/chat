@@ -65,14 +65,22 @@ namespace Чатус
                 }
                 else
                 {
-                    textBox2.Items.Add(DateTime.Now.ToString("hh:mm") + " Неверный логин или пароль");
+                    textBox2.Items.Clear();
                     lines.Add(DateTime.Now.ToString("hh:mm") + " Неверный логин или пароль" + Environment.NewLine);
+                    for (int j = lines.Count - 1; j > -1; j--)
+                    {
+                        textBox2.Items.Add(lines[j]);
+                    }
                 } 
             } 
             catch 
             {
-                textBox2.Items.Add(DateTime.Now.ToString("hh:mm") + " Сервер недоступен");
+                textBox2.Items.Clear();
                 lines.Add(DateTime.Now.ToString("hh:mm") + " Сервер недоступен" + Environment.NewLine);
+                for (int j = lines.Count - 1; j > -1; j--)
+                {
+                    textBox2.Items.Add(lines[j]);
+                }
             }
         }
         static void Listening()
@@ -96,8 +104,14 @@ namespace Чатус
         {
             if (t == 1)
             {
-                textBox2.Items.Add(DateTime.Now.ToString("hh:mm") + " " + message);
+
+                t = 0;
+                textBox2.Items.Clear();
                 lines.Add(DateTime.Now.ToString("hh:mm") + " " + message + Environment.NewLine);
+                for (int j = lines.Count - 1; j > -1; j--)
+                {
+                    textBox2.Items.Add(lines[j]);
+                }
                 try
                 {
                     notifyIcon1.Icon = SystemIcons.WinLogo;
@@ -106,7 +120,7 @@ namespace Чатус
                     notifyIcon1.ShowBalloonTip(5);
                 }
                 catch { }
-                t = 0;
+                
             }
         }
         static List<string> lines = new List<string>();
@@ -116,9 +130,12 @@ namespace Чатус
             {
                 if (textBox4.Text[0] == '#')
                 {
-                    lines.Add(DateTime.Now.ToString("hh:mm") + "Сообщение не может начинаться с символа #");
-                    textBox2.Items.Add(DateTime.Now.ToString("hh:mm") + " Сообщение не может начинаться с символа #");
-                    textBox4.Clear();
+                    textBox2.Items.Clear();
+                    lines.Add(DateTime.Now.ToString("hh:mm") + " Сообщение не может начинаться с символа #");
+                    for (int j = lines.Count - 1; j > -1; j--)
+                    {
+                        textBox2.Items.Add(lines[j]);
+                    }
                 }
             }
             catch { }
@@ -137,8 +154,12 @@ namespace Чатус
 
                     catch
                     {
-                        textBox2.Items.Add(DateTime.Now.ToString("hh:mm") + " Сервер недоступен");
+                        textBox2.Items.Clear();
                         lines.Add(DateTime.Now.ToString("hh:mm") + " Сервер недоступен" + Environment.NewLine);
+                        for (int j = lines.Count - 1; j > -1; j--)
+                        {
+                            textBox2.Items.Add(lines[j]);
+                        }
                         textBox4.Clear();
                     }
                 }
@@ -151,7 +172,7 @@ namespace Чатус
             if (textBox5.Text != "")
             {
                 textBox2.Items.Clear();
-                for (int j = 0; j < lines.Count; j++)
+                for (int j = lines.Count - 1; j > -1; j--)
                 {
                     if (lines[j].Contains(textBox5.Text))
                     {
@@ -161,8 +182,8 @@ namespace Чатус
             }
             if(textBox5.Text == "")
             {
-                textBox2.Clear();
-                for (int j = 0; j < lines.Count; j++)
+                textBox2.Items.Clear();
+                for (int j = lines.Count - 1; j > -1; j--)
                 {
                     textBox2.Items.Add(lines[j]);
                 }
@@ -227,5 +248,6 @@ namespace Чатус
                 sp.Play();
             }
         }
+
     }
 }
